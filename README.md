@@ -25,12 +25,11 @@
 
 ## 环境
 
-在 PowerShell 中进入项目并激活环境：
+在 Windows CMD 中进入项目并激活环境：
 
-```powershell
-Set-Location "F:\pytorch practice"
-.\.venv\Scripts\Activate.ps1
+```cmd
+cd /d "F:\pytorch practice"
+call ".venv\Scripts\activate.bat"
 ```
 
 在 VS Code 或 Jupyter 中选择 `.venv\Scripts\python.exe` 作为 Notebook 内核。
-

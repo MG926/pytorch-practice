@@ -1,4 +1,4 @@
-OpenCode 快捷键与功能指南
+OpenCode 快捷键与功能指南（Windows CMD）
 ============================
 
 OpenCode 是一个开源 AI 编程助手，可在终端(TUI)、桌面应用或 IDE 扩展中使用。
@@ -7,8 +7,9 @@ OpenCode 是一个开源 AI 编程助手，可在终端(TUI)、桌面应用或 I
 【启动】
 -----------------------------------------------------------
 
-- 进入项目目录后启动： opencode
-- 指定工作目录启动：   opencode /path/to/project
+- 进入项目目录：         cd /d "F:\项目路径"
+- 进入项目目录后启动：   opencode
+- 指定工作目录启动：     opencode "F:\项目路径"
 - 初始化项目：         /init  （生成 AGENTS.md，帮助 AI 理解项目）
 
 
@@ -100,9 +101,9 @@ OpenCode 是一个开源 AI 编程助手，可在终端(TUI)、桌面应用或 I
 -----------------------------------------------------------
 
 - @文件名                     模糊搜索并引用文件（文件内容自动加入对话）
-                              如：@packages/functions/src/api/index.ts
+                              如：@packages\functions\src\api\index.ts
 - !命令                       执行 Shell 命令并将输出加入对话
-                              如：!ls -la  或  !git log --oneline -10
+                              CMD 示例：!dir  或  !git log --oneline -10
 - 拖拽图片到终端               图片会被扫描并加入对话上下文
 
 
@@ -146,8 +147,8 @@ OpenCode 是一个开源 AI 编程助手，可在终端(TUI)、桌面应用或 I
 项目级配置：   opencode.json / opencode.jsonc       （项目根目录）
 TUI 配置：     tui.json / tui.jsonc                 （项目根目录）
 规则文件：     AGENTS.md                             （项目根目录）
-自定义命令：   .opencode/commands/*.md              （项目内）
-全局命令：     ~/.config/opencode/commands/*.md     （用户级）
+自定义命令：   .opencode\commands\*.md                         （项目内）
+全局命令：     %USERPROFILE%\.config\opencode\commands\*.md   （用户级）
 
 
 【TUI 常用配置 (tui.json)】
@@ -191,6 +192,6 @@ TUI 配置：     tui.json / tui.jsonc                 （项目根目录）
 
 - Shift+Enter 换行需在 Windows Terminal 的 settings.json 中配置，
   详见：https://opencode.ai/docs/keybinds#windows-terminal
-- 推荐使用 WSL 获得更好的体验
+- 本指南中的终端命令均按 Windows CMD 语法编写
 - Ctrl+Z 在 Windows 下默认为撤销输入（非暂停进程）
 - 安装方式：choco install opencode / scoop install opencode / npm install -g opencode-ai

@@ -1,36 +1,32 @@
-Python 虚拟环境操作指南
+Python 虚拟环境操作指南（Windows CMD）
 =========================
 
 
 【创建虚拟环境】
 -----------------------------------------------------------
 
-1. 创建：
+1. 进入项目目录：
+   cd /d "F:\pytorch practice"
+
+2. 创建虚拟环境：
    python -m venv 环境名
 
-   示例：python -m venv myenv
+   本项目示例：
+   python -m venv .venv
 
-2. 激活（需先 cd 到环境文件夹的上级目录）：
-   .\.venv\Scripts\activate
-    Windows CMD：
-    环境名\Scripts\activate.bat
+3. 在 CMD 中激活：
+   call "环境名\Scripts\activate.bat"
 
-    Windows PowerShell：
-    环境名\Scripts\Activate.ps1
-    或 .\环境名\Scripts\Activate.ps1
+   本项目示例：
+   call ".venv\Scripts\activate.bat"
 
-    Mac/Linux：
-    source 环境名/bin/activate
+   也可使用绝对路径激活，无需先进入项目目录：
+   call "F:\pytorch practice\.venv\Scripts\activate.bat"
 
-    若 PowerShell 提示"无法加载文件...禁止运行脚本"，先执行：
-    Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+4. 激活后，CMD 提示符前会出现环境名：
+   (.venv) F:\pytorch practice>
 
-    也可用绝对路径激活（无需 cd）：
-    F:\项目\环境名\Scripts\activate
-
-3. 激活后命令行前会出现 (环境名) 标识，表示已进入虚拟环境
-
-4. 退出虚拟环境：
+5. 退出虚拟环境：
    deactivate
 
 
@@ -40,37 +36,39 @@ Python 虚拟环境操作指南
 1. 先退出虚拟环境（若已激活）：
    deactivate
 
-2. 直接删除虚拟环境文件夹即可（无副作用）：
-   rmdir /s 环境名        # Windows
-   rm -rf 环境名          # Mac/Linux
+2. 确认当前目录和待删除的环境名无误后，删除虚拟环境文件夹：
+   rmdir /s /q "环境名"
+
+   本项目示例：
+   rmdir /s /q ".venv"
 
 
 【导出/还原依赖】
 -----------------------------------------------------------
 
 1. 导出已安装的包到文件：
-   pip freeze > requirements.txt
+   python -m pip freeze > requirements.txt
 
 2. 从文件安装依赖：
-   pip install -r requirements.txt
+   python -m pip install -r requirements.txt
 
 
 【清华镜像源】
 -----------------------------------------------------------
 
 1. 临时使用清华源安装包：
-   pip install 包名 -i https://pypi.tuna.tsinghua.edu.cn/simple
+   python -m pip install 包名 -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 2. 永久设为默认源（推荐）：
-   pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+   python -m pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 3. 验证是否配置成功：
-   pip config list
+   python -m pip config list
 
 4. 换回官方源：
-   pip config unset global.index-url
+   python -m pip config unset global.index-url
 
-5. 也可写入配置文件（Windows: %APPDATA%\pip\pip.ini / Linux: ~/.pip/pip.conf）：
+5. 也可写入 Windows 配置文件 %APPDATA%\pip\pip.ini：
    [global]
    index-url = https://pypi.tuna.tsinghua.edu.cn/simple
 

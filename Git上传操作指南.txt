@@ -1,4 +1,4 @@
-Git 从零到 GitHub 完整操作指南
+Git 从零到 GitHub 完整操作指南（Windows CMD）
 =====================================
 
 
@@ -8,10 +8,12 @@ Git 从零到 GitHub 完整操作指南
 1. 在项目根目录初始化 Git 仓库：
    git init
 
-2. 创建 .gitignore 文件（Windows 须用 UTF-8 编码，echo 默认写 UTF-16 会导致 Git 无法识别）：
+2. 使用 CMD 创建 .gitignore 文件：
 
-   Set-Content -Path .gitignore -Value .venv/ -Encoding UTF8
-   Add-Content -Path .gitignore -Value .venv/ -Encoding UTF8
+   echo .venv/ > .gitignore
+   echo __pycache__/ >> .gitignore
+
+   说明：> 会创建或覆盖文件，>> 会在文件末尾追加内容。
 
 3. 添加所有文件到暂存区：
    git add .
@@ -42,15 +44,15 @@ Git 从零到 GitHub 完整操作指南
 -----------------------------------------------------------
 
 1. 检查本机是否已有 SSH Key：
-   ls ~/.ssh/id_rsa.pub
+   dir "%USERPROFILE%\.ssh\id_rsa.pub"
 
-   若提示"No such file"，则继续下一步；若已存在，可跳过生成步骤。
+   若提示“系统找不到指定的文件”，则继续下一步；若已存在，可跳过生成步骤。
 
 2. 生成 SSH Key（一路回车即可）：
    ssh-keygen -t rsa -b 4096 -C "你的邮箱@example.com"
 
-3. 复制公钥内容：
-   cat ~/.ssh/id_rsa.pub
+3. 在 CMD 中显示公钥内容，然后复制完整输出：
+   type "%USERPROFILE%\.ssh\id_rsa.pub"
 
 4. 登录 GitHub → Settings → SSH and GPG keys → New SSH key
    粘贴公钥内容，保存。
@@ -83,47 +85,66 @@ Git 从零到 GitHub 完整操作指南
    git diff
 
 3. 添加文件到暂存区：
-   git add .                    # 添加所有
-   git add 文件1 文件2          # 添加指定文件
-   git add -u                   # 仅添加已跟踪文件的修改
+   添加所有文件：
+   git add .
+
+   添加指定文件：
+   git add 文件1 文件2
+
+   仅添加已跟踪文件的修改：
+   git add -u
 
 4. 提交：
    git commit -m "描述信息"
 
 5. 推送：
-   git push                     # 已设置上游分支时
-   git push origin main         # 指定推送到某分支
+   已设置上游分支时：
+   git push
+
+   指定推送到 main 分支：
+   git push origin main
 
 
 【五、分支操作】
 -----------------------------------------------------------
 
 1. 查看分支：
-   git branch                   # 本地分支
-   git branch -a                # 含远程分支
-   git branch -r                # 仅远程分支
+   查看本地分支：
+   git branch
+
+   查看本地和远程分支：
+   git branch -a
+
+   仅查看远程分支：
+   git branch -r
 
 2. 创建分支：
    git branch 新分支名
 
 3. 切换分支：
    git checkout 分支名
-   git switch 分支名            # Git 2.23+ 推荐
+   git switch 分支名
 
 4. 创建并切换到新分支（一步到位）：
    git checkout -b 新分支名
-   git switch -c 新分支名       # Git 2.23+ 推荐
+   git switch -c 新分支名
 
 5. 合并分支：
-   git merge 源分支名           # 将源分支合并到当前分支
+   git merge 源分支名
 
 6. 删除分支：
-   git branch -d 分支名         # 删除已合并的分支
-   git branch -D 分支名         # 强制删除（未合并也删）
+   删除已经合并的分支：
+   git branch -d 分支名
+
+   强制删除分支，包括尚未合并的分支：
+   git branch -D 分支名
 
 7. 推送分支到远程：
-   git push -u origin 分支名    # 首次推送
-   git push                     # 后续推送
+   首次推送：
+   git push -u origin 分支名
+
+   后续推送：
+   git push
 
 8. 删除远程分支：
    git push origin --delete 分支名
@@ -137,20 +158,29 @@ Git 从零到 GitHub 完整操作指南
 -----------------------------------------------------------
 
 1. 创建标签：
-   git tag 标签名                             # 轻量标签
-   git tag -a 标签名 -m "描述"                 # 附注标签
+   创建轻量标签：
+   git tag 标签名
+
+   创建附注标签：
+   git tag -a 标签名 -m "描述"
 
 2. 推送标签到远程：
-   git push origin 标签名                      # 推送单个标签
-   git push origin --tags                      # 推送所有标签
+   推送单个标签：
+   git push origin 标签名
+
+   推送所有标签：
+   git push origin --tags
 
 3. 删除标签：
-   git tag -d 标签名                           # 删除本地标签
-   git push origin --delete 标签名             # 删除远程标签
+   删除本地标签：
+   git tag -d 标签名
+
+   删除远程标签：
+   git push origin --delete 标签名
 
 4. 查看标签：
    git tag
-   git show 标签名                             # 查看标签详情
+   git show 标签名
 
 
 【七、撤销与回退】
@@ -158,11 +188,11 @@ Git 从零到 GitHub 完整操作指南
 
 1. 撤销工作区修改（未 git add）：
    git checkout -- 文件名
-   git restore 文件名                          # Git 2.23+ 推荐
+   git restore 文件名
 
 2. 撤销暂存区（已 git add，未 git commit）：
    git reset HEAD 文件名
-   git restore --staged 文件名                 # Git 2.23+ 推荐
+   git restore --staged 文件名
 
 3. 撤销最近一次提交（保留修改内容）：
    git reset --soft HEAD~1
@@ -191,8 +221,11 @@ Git 从零到 GitHub 完整操作指南
    git stash list
 
 3. 恢复最近一次暂存：
-   git stash pop                  # 恢复并删除 stash 记录
-   git stash apply                # 恢复但保留 stash 记录
+   恢复并删除 stash 记录：
+   git stash pop
+
+   恢复但保留 stash 记录：
+   git stash apply
 
 4. 恢复指定 stash：
    git stash pop stash@{n}
@@ -205,10 +238,17 @@ Git 从零到 GitHub 完整操作指南
 -----------------------------------------------------------
 
 1. 查看提交历史：
-   git log                        # 详细日志
-   git log --oneline              # 单行简略
-   git log --oneline --graph      # 带分支图
-   git log -3                     # 最近 3 条
+   查看详细日志：
+   git log
+
+   查看单行简略日志：
+   git log --oneline
+
+   查看带分支图的日志：
+   git log --oneline --graph
+
+   查看最近 3 条：
+   git log -3
 
 2. 查看某次提交的详情：
    git show commit_id
@@ -220,10 +260,17 @@ Git 从零到 GitHub 完整操作指南
    git blame 文件名
 
 5. 对比差异：
-   git diff                       # 工作区 vs 暂存区
-   git diff --staged              # 暂存区 vs 最新提交
-   git diff commit1 commit2       # 两次提交之间
-   git diff 分支1 分支2           # 两个分支之间
+   工作区与暂存区：
+   git diff
+
+   暂存区与最新提交：
+   git diff --staged
+
+   两次提交之间：
+   git diff commit1 commit2
+
+   两个分支之间：
+   git diff 分支1 分支2
 
 
 【十、远程仓库管理】
@@ -285,9 +332,7 @@ Git 从零到 GitHub 完整操作指南
    解决冲突后 git push
 
 3. 误提交了大文件/敏感文件，想从历史中彻底清除：
-   git filter-branch --force --index-filter \
-     "git rm --cached --ignore-unmatch 文件路径" \
-     --prune-empty --tag-name-filter cat -- --all
+   git filter-branch --force --index-filter "git rm --cached --ignore-unmatch 文件路径" --prune-empty --tag-name-filter cat -- --all
    git push --force --all
 
 4. 合并冲突时终止合并：
